@@ -1,0 +1,52 @@
+{
+  "env": {
+    "browser": true,
+    "commonjs": true,
+    "es6": true,
+    "node": true
+  },
+  "globals": {
+    "DEBUG": false,
+    "PRODUCTION": false
+  },
+  "extends": "eslint:recommended",
+  "parserOptions": {
+    "sourceType": "module"
+  },
+  "rules": {
+    "comma-dangle": [2, "always-multiline"],
+    "no-console": [1],
+    "no-unexpected-multiline": [2],
+    "no-unused-vars": [1],
+    "valid-jsdoc": [2],
+		"indent": ["error", 2],
+
+    "consistent-return": [2],
+    "curly": [2],
+    "dot-location": [2, "property"],
+    "eqeqeq": [2],
+    "no-lone-blocks": [2],
+    "no-loop-func": [2],
+    "no-multi-spaces": [2],
+    "no-native-reassign": [2],
+    "no-sequences": [2],
+    "no-throw-literal": [2],
+
+    "strict": [2, "global"],
+
+    "arrow-body-style": [0, "as-needed"],
+    "arrow-parens": [2],
+    "arrow-spacing": [2],
+    "no-confusing-arrow": [2],
+    "no-var": [2],
+    "object-shorthand": [2],
+    "prefer-arrow-callback": [0],
+    "prefer-const": [2],
+    "prefer-template": [2],
+
+    "brace-style": [2, "allman"],
+    "quotes": [2],
+    "semi": [2, "never"],
+    "keyword-spacing": [2]
+  }
+}
