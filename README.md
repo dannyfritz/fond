@@ -9,6 +9,8 @@ This is managed using [lerna](https://github.com/lerna/lerna).
 
 | Package | Version | Description |
 | ------- | ------- | ----------- |
+| [fond-audio](/packages/fond-audio) |
+| [fond-build](/packages/fond-build) |
 | [fond-debug](/packages/fond-debug) |
 | [fond-graphics](/packages/fond-graphics) |
 | [fond-keyboard](/packages/fond-keyboard) |
