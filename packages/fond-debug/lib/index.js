@@ -1,4 +1,4 @@
-import nodeAssert from "Assert"
+import nodeAssert from "assert"
 
 const DEBUG = process.env.NODE_ENV === "development"
 
