@@ -1,7 +1,7 @@
 {
   "name": "fond-build",
   "description": "",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "bin": {
     "fond-build": "./bin/cli.js"
   },
