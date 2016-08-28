@@ -23,4 +23,7 @@ const cli = meow(`
   }
 )
 
-build(cli.input[0])
+const development = cli.flags.development
+process.env.NODE_ENV = development ? "development" : process.env.NODE_ENV
+
+build(cli.input[0], cli.flags.watch)
