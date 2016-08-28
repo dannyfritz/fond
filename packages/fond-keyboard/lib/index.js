@@ -1,4 +1,4 @@
-import Debug from "./debug"
+import Debug from "fond-debug"
 const { assert } = Debug
 
 export const keyEnum = Object.freeze({

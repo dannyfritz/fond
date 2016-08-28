@@ -1,0 +1,26 @@
+{
+  "name": "fond-timer",
+  "description": "",
+  "version": "1.0.0",
+  "main": "lib/index.js",
+  "scripts": {},
+  "author": "Danny Fritz <dannyfritz@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dannyfritz/fond.git"
+  },
+  "keywords": [
+    "fond",
+    "game engine",
+    "game framework",
+    "game"
+  ],
+  "bugs": {
+    "url": "https://github.com/dannyfritz/fond/issues"
+  },
+  "homepage": "https://github.com/dannyfritz/fond#readme",
+  "dependencies": {
+    "fond-debug": "^1.0.0"
+  }
+}

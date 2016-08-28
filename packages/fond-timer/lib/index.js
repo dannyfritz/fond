@@ -1,4 +1,4 @@
-import Debug from "./Debug"
+import Debug from "fond-debug"
 const { assert } = Debug
 
 export default class Timer {

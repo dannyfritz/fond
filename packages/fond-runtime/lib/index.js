@@ -1,4 +1,4 @@
-import Timer from "./Timer"
+import Timer from "fond-timer"
 import newMoody from "moody"
 
 export default class Runtime {
