@@ -23,6 +23,4 @@ const cli = meow(`
   }
 )
 
-console.log(cli.input[0])
-
 build(cli.input[0])

@@ -23,7 +23,6 @@
   },
   "homepage": "https://github.com/dannyfritz/fond#readme",
   "dependencies": {
-    "fond-debug": "^1.0.1",
     "meow": "^3.7.0",
     "rollup": "^0.34.10",
     "rollup-plugin-commonjs": "^3.3.1",
