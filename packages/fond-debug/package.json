@@ -1,7 +1,7 @@
 {
   "name": "fond-debug",
   "description": "",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "lib/index.js",
   "scripts": {},
   "author": "Danny Fritz <dannyfritz@gmail.com>",
