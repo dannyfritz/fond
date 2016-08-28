@@ -24,6 +24,6 @@ export default class Runtime {
   }
   swap (newState, ...args)
   {
-    return this.moody.switch(newState, args)
+    return this.moody.swap(newState, args)
   }
 }
