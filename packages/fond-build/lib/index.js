@@ -1,5 +1,3 @@
-/* eslint-disable no-console */
-
 const sourcemaps = require("rollup-plugin-sourcemaps")
 const nodeResolve = require("rollup-plugin-node-resolve")
 const commonjs = require("rollup-plugin-commonjs")
@@ -9,15 +7,9 @@ const builtins = require("rollup-plugin-node-builtins")
 const replace = require("rollup-plugin-replace")
 const rollup = require("rollup")
 const watch = require("rollup-watch")
-const chalk = require("chalk")
-const moment = require("moment")
+const log = require("./log")
 
 let cache
-
-function timestamp ()
-{
-  return moment().format("HH:mm")
-}
 
 function getOptions (name)
 {
@@ -44,8 +36,8 @@ function getOptions (name)
 
 function getRollupBundle (options)
 {
-  console.log(chalk.bold.green(`[${timestamp()}] Fond build started`))
-  const started = moment()
+  log.buildStarted()
+  const duration = log.getDuration()
   return rollup.rollup(options)
     .then((bundle) =>
     {
@@ -53,14 +45,49 @@ function getRollupBundle (options)
     })
     .then(() =>
     {
-      const duration = moment.duration(moment() - started).humanize()
-      console.log(chalk.bold.green(`[${timestamp()}] Fond build finished in ${duration}`))
+      log.buildFinished(duration())
     })
     .catch((reason) =>
     {
-      console.error(chalk.bold.red(`[${timestamp()}] Fond build failed!`))
-      console.error(chalk.bold.red(reason))
+      log.buildFailed(reason, duration())
     })
+}
+
+function watchRollupBundle (options)
+{
+  try
+  {
+    const watcher = watch(rollup, options)
+    watcher.on("event", (event) =>
+    {
+      let duration = log.getDuration()
+      if (event.code === "STARTING")
+      {
+        log.watchStarted()
+      }
+      else if (event.code === "BUILD_START")
+      {
+        log.buildStarted()
+        duration = log.getDuration()
+      }
+      else if (event.code === "BUILD_END")
+      {
+        log.buildFinished(duration())
+      }
+      else if (event.code === "ERROR")
+      {
+        log.buildFailed(event.error, duration())
+      }
+      else
+      {
+        log.unknownEvent(event)
+      }
+    })
+  }
+  catch (error)
+  {
+    log.buildFailed(error)
+  }
 }
 
 module.exports = function build (name = "fond", isWatching = false)
@@ -68,43 +95,10 @@ module.exports = function build (name = "fond", isWatching = false)
   const options = getOptions(name)
   if (isWatching)
   {
-    try
-    {
-      const watcher = watch(rollup, options)
-      watcher.on("event", (event) =>
-      {
-        if (event.code === "STARTING")
-        {
-          console.log(chalk.bold.green(`[${timestamp()}] Fond build getting ready to watch...`))
-        }
-        else if (event.code === "BUILD_START")
-        {
-          console.log(chalk.bold.green(`[${timestamp()}] Fond build started`))
-        }
-        else if (event.code === "BUILD_END")
-        {
-          const duration = moment.duration(event.duration).humanize()
-          console.log(chalk.bold.green(`[${timestamp()}] Fond build finished in ${duration}`))
-        }
-        else if (event.code === "ERROR")
-        {
-          console.error(chalk.bold.red(`[${timestamp()}] Fond build failed!`))
-          console.error(chalk.bold.red(event.error))
-        }
-        else
-        {
-          console.error(chalk.bold.orange(`[${timestamp()}] Fond build unhandled exception!`))
-          console.error(chalk.bold.orange(event))
-        }
-      })
-    }
-    catch (error)
-    {
-      console.error(error)
-    }
+    watchRollupBundle(options)
   }
   else
   {
-    return getRollupBundle(options)
+    getRollupBundle(options)
   }
 }
