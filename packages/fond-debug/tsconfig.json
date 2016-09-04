@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "noImplicitAny": true,
+    "preserveConstEnums": true,
+    "sourceMap": true,
+    "moduleResolution": "node",
+    "declaration": true,
+    "pretty": true
+  },
+  "files": [
+    "typings/index.d.ts",
+    "./lib/index.ts"
+  ]
+}

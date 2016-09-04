@@ -3,6 +3,12 @@ logs
 *.log
 npm-debug.log*
 
+# typescript
+*.d.ts
+*.map
+*.js
+typings
+
 # Runtime data
 pids
 *.pid
