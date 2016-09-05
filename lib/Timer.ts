@@ -1,7 +1,10 @@
-import Debug from "fond-debug"
+import Debug from "./Debug"
 const { assert } = Debug
 
-export default class Timer {
+export class Timer {
+  private startDate: Date
+  private lastDate: Date
+  public dt: Number
   constructor ()
   {
     this.startDate = new Date()

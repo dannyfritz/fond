@@ -9,14 +9,8 @@ if (DEBUG)
   assert = nodeAssert
 }
 
-let log = () =>
-  {
-    console.log
-  }
+const log = console.log
 
-const error = () =>
-  {
-    console.error
-  }
+const error = console.error
 
 export default { assert, error, log, DEBUG }

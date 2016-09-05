@@ -3,10 +3,9 @@ logs
 *.log
 npm-debug.log*
 
+dist
+
 # typescript
-*.d.ts
-*.map
-*.js
 typings
 
 # Runtime data

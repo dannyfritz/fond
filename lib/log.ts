@@ -1,55 +1,45 @@
 /* eslint-disable no-console */
 
 const chalk = require("chalk")
-const moment = require("moment")
+const moment : moment.MomentStatic = require("moment")
 
-function timestamp (time)
+export function timestamp (time = moment()) : string
 {
-  time = time || moment()
   return `[${time.format("HH:mm")}]`
 }
 
-function getDuration ()
+ export function getDuration ()
 {
   const started = moment()
-  return function logDurationStarted ()
+  return function logDurationStarted () : string
   {
-    return moment.duration(moment() - started).humanize()
+    return moment.duration(moment().unix() - started.unix()).humanize()
   }
 }
 
-function watchStarted ()
+export function watchStarted ()
 {
   console.log(chalk.bold.green(`${timestamp()} Fond build getting ready to watch...`))
 }
 
-function buildStarted ()
+export function buildStarted ()
 {
   console.log(chalk.bold.green(`${timestamp()} Fond build started`))
 }
 
-function buildFinished (duration)
+export function buildFinished (duration : string)
 {
   console.log(chalk.bold.green(`${timestamp()} Fond build finished in ${duration}`))
 }
 
-function buildFailed (reason, duration)
+export function buildFailed (reason : Error, duration? : string)
 {
   console.error(chalk.bold.red(`${timestamp()} Fond build failed after ${duration}!`))
   console.error(chalk.bold.red(reason))
 }
 
-function unknownEvent (event)
+export function unknownEvent (event : any)
 {
   console.error(chalk.bold.orange(`${timestamp()} Fond build unhandled exception!`))
   console.error(chalk.bold.orange(event))
-}
-
-module.exports = {
-  getDuration,
-  buildStarted,
-  buildFinished,
-  buildFailed,
-  watchStarted,
-  unknownEvent,
 }

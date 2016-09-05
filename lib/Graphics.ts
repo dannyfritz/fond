@@ -1,7 +1,11 @@
-import Debug from "fond-debug"
+import Debug from "./Debug"
+import { Vector2d } from "./Vector"
 const { assert } = Debug
 
 export default class Graphics {
+  private canvas: HTMLCanvasElement
+  private context: CanvasRenderingContext2D
+  private aspectRatio: Number
   constructor (aspectRatio = 1)
   {
     this.canvas = document.createElement("canvas")
@@ -31,26 +35,26 @@ export default class Graphics {
     this.canvas.width = window.innerWidth
     this.canvas.height = window.innerHeight
   }
-  getLongestEdge ()
+  getLongestEdge () : number
   {
     const width = this.canvas.width
     const height = this.canvas.height
     return width > height ? width : height
   }
-  getShortestEdge ()
+  getShortestEdge () : number
   {
     const width = this.canvas.width
     const height = this.canvas.height
     return width < height ? width : height
   }
-  worldVToScreen (v)
+  worldVToScreen (v : Vector2d) : Vector2d
   {
     return {
       x: this.worldXToScreen(v.x),
       y: this.worldYToScreen(v.y),
     }
   }
-  worldXToScreen (x)
+  worldXToScreen (x : number) : number
   {
     let offset = 0
     if (this.getShortestEdge() === this.canvas.height)
@@ -59,7 +63,7 @@ export default class Graphics {
     }
     return x * this.getShortestEdge() / 100 + offset
   }
-  worldYToScreen (y)
+  worldYToScreen (y : number) : number
   {
     let offset = 0
     if (this.getShortestEdge() === this.canvas.width)
@@ -68,7 +72,7 @@ export default class Graphics {
     }
     return y * this.getShortestEdge() / 100 + offset
   }
-  worldScalerToScreen (l)
+  worldScalerToScreen (l : number) : number
   {
     return l * this.getShortestEdge() / 100
   }
@@ -101,7 +105,7 @@ export default class Graphics {
   {
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height)
   }
-  circle (worldV, worldRadius)
+  circle (worldV : Vector2d, worldRadius : number)
   {
     const screenV = this.worldVToScreen(worldV)
     const screenR = this.worldScalerToScreen(worldRadius)
@@ -109,7 +113,7 @@ export default class Graphics {
     this.context.arc(screenV.x, screenV.y, screenR, 0, 360)
     this.context.stroke()
   }
-  polygon (vertices)
+  polygon (vertices : Vector2d[])
   {
     this.context.beginPath()
     vertices.forEach((worldV) =>
@@ -120,7 +124,7 @@ export default class Graphics {
     this.context.closePath()
     this.context.stroke()
   }
-  line (v1, v2)
+  line (v1 : Vector2d, v2 : Vector2d)
   {
     const worldV1 = this.worldVToScreen(v1)
     const worldV2 = this.worldVToScreen(v2)
@@ -129,12 +133,12 @@ export default class Graphics {
     this.context.lineTo(worldV2.x, worldV2.y)
     this.context.stroke()
   }
-  text (v, text)
+  text (v : Vector2d, text : string)
   {
     const worldV = this.worldVToScreen(v)
     this.context.fillText(text, worldV.x, worldV.y)
   }
-  textBoundingBox (text)
+  textBoundingBox (text : string)
   {
     return this.context.measureText(text)
   }

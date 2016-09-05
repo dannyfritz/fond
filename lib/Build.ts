@@ -7,11 +7,11 @@ const builtins = require("rollup-plugin-node-builtins")
 const replace = require("rollup-plugin-replace")
 const rollup = require("rollup")
 const watch = require("rollup-watch")
-const log = require("./log")
+import * as log from "./log"
 
-let cache
+let cache : Object
 
-function getOptions (name)
+function getOptions (name : string)
 {
   return {
     entry: "./src/index.js",
@@ -34,12 +34,12 @@ function getOptions (name)
   }
 }
 
-function getRollupBundle (options)
+function getRollupBundle (options : Object)
 {
   log.buildStarted()
   const duration = log.getDuration()
   return rollup.rollup(options)
-    .then((bundle) =>
+    .then((bundle : any) =>
     {
       return bundle.write(options)
     })
@@ -47,18 +47,18 @@ function getRollupBundle (options)
     {
       log.buildFinished(duration())
     })
-    .catch((reason) =>
+    .catch((reason : Error) =>
     {
       log.buildFailed(reason, duration())
     })
 }
 
-function watchRollupBundle (options)
+function watchRollupBundle (options : Object)
 {
   try
   {
     const watcher = watch(rollup, options)
-    watcher.on("event", (event) =>
+    watcher.on("event", (event : any) =>
     {
       let duration = log.getDuration()
       if (event.code === "STARTING")
@@ -90,7 +90,7 @@ function watchRollupBundle (options)
   }
 }
 
-module.exports = function build (name = "fond", isWatching = false)
+export default function build (name = "fond", isWatching = false)
 {
   const options = getOptions(name)
   if (isWatching)
