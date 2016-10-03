@@ -1,0 +1,16 @@
+{
+  "name": "pong",
+  "private": true,
+  "scripts": {
+    "build": "browserify main.js --debug -o bundle.js",
+    "dev": "watchify main.js -v --debug -o bundle.js"
+  },
+  "devDependencies": {
+    "browserify": "^13.1.0",
+    "watchify": "^3.7.0"
+  },
+  "dependencies": {
+    "lodash": "^4.16.4",
+    "sat": "^0.6.0"
+  }
+}

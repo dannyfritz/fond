@@ -1,17 +1,17 @@
-import Debug from "./Debug"
+import { Debug } from "./Debug"
 const { assert } = Debug
 
 export class Timer {
+  public dt: number
   private startDate: Date
   private lastDate: Date
-  public dt: Number
   constructor ()
   {
     this.startDate = new Date()
     this.lastDate = this.startDate
     this.dt = 0
   }
-  update ()
+  public update ()
   {
     const now = new Date()
     this.dt = (now.getTime() - this.lastDate.getTime()) / 1000 || .001

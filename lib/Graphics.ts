@@ -1,8 +1,8 @@
-import Debug from "./Debug"
-import { Vector2d } from "./Vector"
+import { Debug } from "./Debug"
+import { IVector2d } from "./Vector"
 const { assert } = Debug
 
-export default class Graphics {
+export class Graphics {
   private canvas: HTMLCanvasElement
   private context: CanvasRenderingContext2D
   private aspectRatio: Number
@@ -13,48 +13,49 @@ export default class Graphics {
     assert(this.context !== null, "Browser must support Canvas 2d")
     this.aspectRatio = aspectRatio
   }
-  addToDom (targetDomElement = document.body)
+  public addToDom (targetDomElement = document.body)
   {
     targetDomElement.appendChild(this.canvas)
   }
-  removeFromDom ()
+  public removeFromDom ()
   {
     this.canvas.remove()
   }
-  fitWindow ()
+  public fitWindow ()
   {
     this.canvas.style.display = "block"
     this.resizeCanvas()
     window.addEventListener("resize", () =>
-    {
-      this.resizeCanvas()
-    })
+      {
+        this.resizeCanvas()
+      }
+    )
   }
-  resizeCanvas ()
+  public resizeCanvas ()
   {
     this.canvas.width = window.innerWidth
     this.canvas.height = window.innerHeight
   }
-  getLongestEdge () : number
+  public getLongestEdge (): number
   {
     const width = this.canvas.width
     const height = this.canvas.height
     return width > height ? width : height
   }
-  getShortestEdge () : number
+  public getShortestEdge (): number
   {
     const width = this.canvas.width
     const height = this.canvas.height
     return width < height ? width : height
   }
-  worldVToScreen (v : Vector2d) : Vector2d
+  public worldVToScreen (v: IVector2d): IVector2d
   {
     return {
       x: this.worldXToScreen(v.x),
       y: this.worldYToScreen(v.y),
     }
   }
-  worldXToScreen (x : number) : number
+  public worldXToScreen (x: number): number
   {
     let offset = 0
     if (this.getShortestEdge() === this.canvas.height)
@@ -63,7 +64,7 @@ export default class Graphics {
     }
     return x * this.getShortestEdge() / 100 + offset
   }
-  worldYToScreen (y : number) : number
+  public worldYToScreen (y: number): number
   {
     let offset = 0
     if (this.getShortestEdge() === this.canvas.width)
@@ -72,11 +73,11 @@ export default class Graphics {
     }
     return y * this.getShortestEdge() / 100 + offset
   }
-  worldScalerToScreen (l : number) : number
+  public worldScalerToScreen (l: number): number
   {
     return l * this.getShortestEdge() / 100
   }
-  letterBox ()
+  public letterBox ()
   {
     this.push()
     const edge = this.getShortestEdge()
@@ -101,11 +102,11 @@ export default class Graphics {
     }
     this.pop()
   }
-  clear ()
+  public clear ()
   {
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height)
   }
-  circle (worldV : Vector2d, worldRadius : number)
+  public circle (worldV: IVector2d, worldRadius: number)
   {
     const screenV = this.worldVToScreen(worldV)
     const screenR = this.worldScalerToScreen(worldRadius)
@@ -113,18 +114,19 @@ export default class Graphics {
     this.context.arc(screenV.x, screenV.y, screenR, 0, 360)
     this.context.stroke()
   }
-  polygon (vertices : Vector2d[])
+  public polygon (vertices: IVector2d[])
   {
     this.context.beginPath()
     vertices.forEach((worldV) =>
-    {
-      const screenV = this.worldVToScreen(worldV)
-      this.context.lineTo(screenV.x, screenV.y)
-    })
+      {
+        const screenV = this.worldVToScreen(worldV)
+        this.context.lineTo(screenV.x, screenV.y)
+      }
+    )
     this.context.closePath()
     this.context.stroke()
   }
-  line (v1 : Vector2d, v2 : Vector2d)
+  public line (v1: IVector2d, v2: IVector2d)
   {
     const worldV1 = this.worldVToScreen(v1)
     const worldV2 = this.worldVToScreen(v2)
@@ -133,20 +135,20 @@ export default class Graphics {
     this.context.lineTo(worldV2.x, worldV2.y)
     this.context.stroke()
   }
-  text (v : Vector2d, text : string)
+  public text (v: IVector2d, text: string)
   {
     const worldV = this.worldVToScreen(v)
     this.context.fillText(text, worldV.x, worldV.y)
   }
-  textBoundingBox (text : string)
+  public textBoundingBox (text: string)
   {
     return this.context.measureText(text)
   }
-  push ()
+  public push ()
   {
     this.context.save()
   }
-  pop ()
+  public pop ()
   {
     this.context.restore()
   }

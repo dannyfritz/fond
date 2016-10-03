@@ -1,5 +1,8 @@
 {
   "parser": "typescript-eslint-parser",
+  "parserOptions": {
+    "sourceType": "module"
+  },
   "env": {
     "browser": true,
     "commonjs": true,
@@ -10,44 +13,46 @@
     "DEBUG": false,
     "PRODUCTION": false
   },
+  "plugins": [
+    "typescript"
+  ],
   "extends": "eslint:recommended",
-  "parserOptions": {
-    "sourceType": "module"
-  },
   "rules": {
-    "comma-dangle": [2, "always-multiline"],
-    "no-console": [1],
-    "no-unexpected-multiline": [2],
-    "no-unused-vars": [1],
-    "valid-jsdoc": [2],
-		"indent": ["error", 2],
+    "comma-dangle": ["error", "always-multiline"],
+    "no-console": "warn",
+    "no-unexpected-multiline": "error",
+    "no-unused-vars": "warn",
+    "valid-jsdoc": "error",
+		# "indent": ["error", 2],
 
-    "consistent-return": [2],
-    "curly": [2],
-    "dot-location": [2, "property"],
-    "eqeqeq": [2],
-    "no-lone-blocks": [2],
-    "no-loop-func": [2],
-    "no-multi-spaces": [2],
-    "no-native-reassign": [2],
-    "no-sequences": [2],
-    "no-throw-literal": [2],
+    "consistent-return": "error",
+    "curly": "error",
+    "dot-location": ["error", "property"],
+    "eqeqeq": "error",
+    "no-lone-blocks": "error",
+    "no-loop-func": "error",
+    "no-multi-spaces": "error",
+    "no-native-reassign": "error",
+    "no-sequences": "error",
+    "no-throw-literal": "error",
 
-    "strict": [2, "global"],
+    "strict": ["error", "global"],
 
-    "arrow-body-style": [0, "as-needed"],
-    "arrow-parens": [2],
-    "arrow-spacing": [2],
-    "no-confusing-arrow": [2],
-    "no-var": [2],
-    "object-shorthand": [2],
-    "prefer-arrow-callback": [0],
-    "prefer-const": [2],
-    "prefer-template": [2],
+    "arrow-body-style": ["off", "as-needed"],
+    "arrow-parens": "error",
+    "arrow-spacing": "error",
+    "no-confusing-arrow": "error",
+    "no-var": "error",
+    "object-shorthand": "error",
+    "prefer-arrow-callback": "off",
+    "prefer-const": "error",
+    "prefer-template": "error",
 
-    "brace-style": [2, "allman"],
-    "quotes": [2],
-    "semi": [2, "never"],
-    "keyword-spacing": [2]
+    "brace-style": ["error", "allman"],
+    "quotes": "error",
+    "semi": ["error", "never"],
+    "keyword-spacing": "error",
+
+    "typescript/type-annotation-spacing": "error"
   }
 }

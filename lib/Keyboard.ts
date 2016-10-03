@@ -1,14 +1,14 @@
-import Debug from "./Debug"
-const { assert } = Debug
+// import Debug from "./Debug"
+// const { assert } = Debug
 
+// TODO: KeyCode Dictionary
 export type KeyCode =
-  "up" | "down" | "left" | "right" |
+  "ArrowUp" | "arrowDown" | "arrowLeft" | "arrowRight" |
   "w" | "s" | "a" | "d" |
   "space"
 
-export default class Keyboard {
-  //TODO: KeyCode Dictionary
-  private keyState : { [index: string] : boolean }
+export class Keyboard {
+  private keyState: { [index: string]: boolean }
   constructor ()
   {
     this.keyState = {}
@@ -16,25 +16,25 @@ export default class Keyboard {
     this.keyUpEvent = this.keyUpEvent.bind(this)
     this.addEvents()
   }
-  addEvents () : void
+  public addEvents (): void
   {
     document.addEventListener("keydown", this.keyDownEvent)
     document.addEventListener("keyup", this.keyUpEvent)
   }
-  removeEvents () : void
+  public removeEvents (): void
   {
     document.removeEventListener("keydown", this.keyDownEvent)
     document.removeEventListener("keyup", this.keyUpEvent)
   }
-  keyDownEvent (event : KeyboardEvent) : void
+  private keyDownEvent (event: KeyboardEvent): void
   {
     this.keyState[event.key] = true
   }
-  keyUpEvent (event : KeyboardEvent) : void
+  private keyUpEvent (event: KeyboardEvent): void
   {
     this.keyState[event.key] = false
   }
-  isKeyDown (key : KeyCode) : boolean
+  public isKeyDown (key: KeyCode): boolean
   {
     return !!this.keyState[key]
   }

@@ -1,11 +1,10 @@
-export default class Audio
-{
-  private tags : { [index: string] : HTMLAudioElement }
+export class Audio {
+  private tags: { [index: string]: HTMLAudioElement }
   constructor ()
   {
     this.tags = {}
   }
-  newSource (filepath : string, tag : string) : HTMLAudioElement
+  public newSource (filepath: string, tag: string): HTMLAudioElement
   {
     const audioTag = document.createElement("audio")
     audioTag.src = filepath
