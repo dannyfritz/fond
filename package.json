@@ -1,6 +1,6 @@
 {
   "name": "fond",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "license": "MIT",
   "description": "[Website](https://dannyfritz.github.io/fond/)",
   "homepage": "https://github.com/dannyfritz/fond#readme",
@@ -25,7 +25,8 @@
     "url": "https://github.com/dannyfritz/fond/issues"
   },
   "files": [
-    "dist", "README.md"
+    "dist",
+    "README.md"
   ],
   "devDependencies": {
     "@types/moment": "^2.13.0",
