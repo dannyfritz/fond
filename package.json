@@ -24,6 +24,9 @@
   "bugs": {
     "url": "https://github.com/dannyfritz/fond/issues"
   },
+  "files": [
+    "dist", "README.md"
+  ],
   "devDependencies": {
     "@types/moment": "^2.13.0",
     "@types/node": "^6.0.38",
