@@ -1,155 +1,193 @@
 import { Debug } from "./Debug"
-import { IVector2d } from "./Vector"
+import { Vector2d, radian } from "./Vector"
+import { Color } from "./Color"
+import { Transform, TransformOperation, TransformOperationType } from "./Transform"
 const { assert } = Debug
 
-export class Graphics {
-  private canvas: HTMLCanvasElement
-  private context: CanvasRenderingContext2D
-  private aspectRatio: Number
-  constructor (aspectRatio = 1)
+export enum DrawMode { line, fill }
+
+export class Canvas2d
+{
+  private canvas : HTMLCanvasElement;
+  private context : CanvasRenderingContext2D;
+  constructor ()
   {
     this.canvas = document.createElement("canvas")
     this.context = this.canvas.getContext("2d")
     assert(this.context !== null, "Browser must support Canvas 2d")
-    this.aspectRatio = aspectRatio
   }
-  public addToDom (targetDomElement = document.body)
+  public resize (width: number, height: number) : void
+  {
+    this.canvas.width = width
+    this.canvas.height = height
+  }
+  public getWidth () : number
+  {
+    return this.canvas.width
+  }
+  public getHeight () : number
+  {
+    return this.canvas.height
+  }
+  public addToDom (targetDomElement = document.body) : void
   {
     targetDomElement.appendChild(this.canvas)
   }
-  public removeFromDom ()
+  public removeFromDom () : void
   {
     this.canvas.remove()
   }
-  public fitWindow ()
+  public drawCanvas (canvas: Canvas2d) : void
   {
-    this.canvas.style.display = "block"
-    this.resizeCanvas()
-    window.addEventListener("resize", () =>
-      {
-        this.resizeCanvas()
-      }
-    )
+
   }
-  public resizeCanvas ()
+  public drawImage (image: Image) : void
   {
-    this.canvas.width = window.innerWidth
-    this.canvas.height = window.innerHeight
+
   }
-  public getLongestEdge (): number
+  public drawText (drawMode: DrawMode, text: Text) : void
   {
-    const width = this.canvas.width
-    const height = this.canvas.height
-    return width > height ? width : height
+    this.drawStrokeOrFill(drawMode)
   }
-  public getShortestEdge (): number
+  public drawPoint (drawMode: DrawMode) : void
   {
-    const width = this.canvas.width
-    const height = this.canvas.height
-    return width < height ? width : height
+    this.drawPolygon(drawMode, [
+      {x: 0, y:0},
+      {x: 1, y:0},
+      {x: 1, y:1},
+      {x: 0, y:1},
+    ])
   }
-  public worldVToScreen (v: IVector2d): IVector2d
+  public drawCircle (drawMode: DrawMode, radius: number) : void
   {
-    return {
-      x: this.worldXToScreen(v.x),
-      y: this.worldYToScreen(v.y),
-    }
-  }
-  public worldXToScreen (x: number): number
-  {
-    let offset = 0
-    if (this.getShortestEdge() === this.canvas.height)
-    {
-      offset = (this.getLongestEdge() - this.getShortestEdge()) / 2
-    }
-    return x * this.getShortestEdge() / 100 + offset
-  }
-  public worldYToScreen (y: number): number
-  {
-    let offset = 0
-    if (this.getShortestEdge() === this.canvas.width)
-    {
-      offset = (this.getLongestEdge() - this.getShortestEdge()) / 2
-    }
-    return y * this.getShortestEdge() / 100 + offset
-  }
-  public worldScalerToScreen (l: number): number
-  {
-    return l * this.getShortestEdge() / 100
-  }
-  public letterBox ()
-  {
-    this.push()
-    const edge = this.getShortestEdge()
-    const spaceRemaining = this.getLongestEdge() - this.getShortestEdge()
-    const letterBoxSize = spaceRemaining / 2
-    this.context.fillStyle = "hsl(0, 0%, 0%)"
-    if (edge === this.canvas.width)
-    {
-      this.context.fillRect(0, 0, this.canvas.width, letterBoxSize)
-      this.context.fillRect(
-        0, this.canvas.height - letterBoxSize,
-        this.canvas.width, letterBoxSize
-      )
-    }
-    else
-    {
-      this.context.fillRect(0, 0, letterBoxSize, this.canvas.height)
-      this.context.fillRect(
-        this.canvas.width - letterBoxSize, 0,
-        this.canvas.width, this.canvas.height
-      )
-    }
-    this.pop()
-  }
-  public clear ()
-  {
-    this.context.clearRect(0, 0, this.canvas.width, this.canvas.height)
-  }
-  public circle (worldV: IVector2d, worldRadius: number)
-  {
-    const screenV = this.worldVToScreen(worldV)
-    const screenR = this.worldScalerToScreen(worldRadius)
     this.context.beginPath()
-    this.context.arc(screenV.x, screenV.y, screenR, 0, 360)
+    this.context.arc(0, 0, radius, 0, 360)
+    this.context.stroke()
+    this.drawStrokeOrFill(drawMode)
+  }
+  public drawLine (vector: Vector2d) : void
+  {
+    this.context.beginPath()
+    this.context.lineTo(vector.x, vector.y)
     this.context.stroke()
   }
-  public polygon (vertices: IVector2d[])
+  public drawPolygon (drawMode : DrawMode, vertices: Vector2d[]) : void
   {
     this.context.beginPath()
-    vertices.forEach((worldV) =>
+    vertices.forEach((vector) =>
       {
-        const screenV = this.worldVToScreen(worldV)
-        this.context.lineTo(screenV.x, screenV.y)
+        this.context.lineTo(vector.x, vector.y)
       }
     )
     this.context.closePath()
-    this.context.stroke()
+    this.drawStrokeOrFill(drawMode)
   }
-  public line (v1: IVector2d, v2: IVector2d)
+  private drawStrokeOrFill (drawMode: DrawMode) : void
   {
-    const worldV1 = this.worldVToScreen(v1)
-    const worldV2 = this.worldVToScreen(v2)
-    this.context.beginPath()
-    this.context.moveTo(worldV1.x, worldV1.y)
-    this.context.lineTo(worldV2.x, worldV2.y)
-    this.context.stroke()
+    if (drawMode === DrawMode.line)
+    {
+      this.context.stroke()
+    }
+    else if (drawMode === DrawMode.fill)
+    {
+      this.context.fill()
+    }
   }
-  public text (v: IVector2d, text: string)
+  public transform (transform: Transform) : void
   {
-    const worldV = this.worldVToScreen(v)
-    this.context.fillText(text, worldV.x, worldV.y)
+    transform.operations.forEach((operation: TransformOperation) => {
+      if (operation.type === TransformOperationType.rotate)
+      {
+        this.rotate(operation.angle)
+      }
+      else if (operation.type === TransformOperationType.scale)
+      {
+        this.scale(operation.factor)
+      }
+      else if (operation.type === TransformOperationType.translate)
+      {
+        this.translate(operation.distance)
+      }
+    })
   }
-  public textBoundingBox (text: string)
+  private rotate (angle: radian) : void
   {
-    return this.context.measureText(text)
+    this.context.rotate(angle)
   }
-  public push ()
+  private scale (factor: Vector2d) : void
+  {
+    this.context.scale(factor.x, factor.y)
+  }
+  private translate (distance: Vector2d) : void
+  {
+    this.context.translate(distance.x, distance.y)
+  }
+  public push () : void
   {
     this.context.save()
   }
-  public pop ()
+  public pop () : void
   {
     this.context.restore()
+  }
+  public clear () : void
+  {
+    this.context.clearRect(0, 0, this.canvas.width, this.canvas.height)
+  }
+  public setFillStyle (style: Color) : void
+  {
+    this.context.fillStyle = style.cssValue()
+  }
+  public setLineStyle (style: Color) : void
+  {
+    this.context.strokeStyle = style.cssValue()
+  }
+  public setLineWidth (width: number = 1) : void
+  {
+    this.context.lineWidth = width
+  }
+  public setFont (font: Font) : void
+  {
+    this.context.font = font.cssValue()
+  }
+}
+
+export interface CssValue
+{
+  cssValue () : string
+}
+
+export class Font implements CssValue
+{
+  public font : string
+  public size : number
+  public sizeUnit : string
+  constructor (font: string, size: number, sizeUnit: string = "px")
+  {
+    this.font = font
+    this.size = size
+    this.sizeUnit = sizeUnit
+  }
+  cssValue () : string
+  {
+    return ""
+  }
+}
+
+export class Text
+{
+  public text : string
+  constructor (text : string)
+  {
+    this.text = text
+  }
+}
+
+export class Image
+{
+  public src : string
+  constructor (src : string)
+  {
+    this.src = src
   }
 }

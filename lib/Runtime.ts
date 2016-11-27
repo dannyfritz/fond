@@ -1,6 +1,12 @@
 import { Timer } from "./Timer"
 import { Moody } from "moody"
 
+export interface Runnable
+{
+  update (dt: number) : void
+  draw () : void
+}
+
 export class Runtime
 {
   private timer: Timer
@@ -17,7 +23,7 @@ export class Runtime
     this.moody.execute("draw")
     requestAnimationFrame(() => this.run())
   }
-  public push (newState: Object, ...args: any[])
+  public push (newState: Runnable, ...args: any[])
   {
     return this.moody.push(newState, ...args)
   }
@@ -25,7 +31,7 @@ export class Runtime
   {
     return this.moody.pop()
   }
-  public swap (newState: Object, ...args: any[])
+  public swap (newState: Runnable, ...args: any[])
   {
     return this.moody.swap(newState, ...args)
   }

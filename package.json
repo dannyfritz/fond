@@ -29,12 +29,11 @@
     "README.md"
   ],
   "devDependencies": {
-    "@types/moment": "^2.13.0",
-    "@types/node": "^6.0.38",
+    "@types/node": "^6.0.51",
     "eslint": "^3.3.1",
     "eslint-plugin-typescript": "^0.1.0",
     "typescript": "^2.0.0",
-    "typescript-eslint-parser": "^0.4.0"
+    "typescript-eslint-parser": "^1.0.0"
   },
   "dependencies": {
     "moody": "^1.0.0"

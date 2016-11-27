@@ -1,41 +1,34 @@
-// import Debug from "./Debug"
-// const { assert } = Debug
-
-// TODO: KeyCode Dictionary
+// IDEA(danny): https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/code
+// TODO(danny): KeyCode Dictionary
 export type KeyCode =
   "ArrowUp" | "arrowDown" | "arrowLeft" | "arrowRight" |
   "w" | "s" | "a" | "d" |
   "space"
 
-export class Keyboard {
-  private keyState: { [index: string]: boolean }
-  constructor ()
+const keyState: { [index: string]: boolean } = {}
+
+export const Keyboard =
+{
+  addEvents (): void
   {
-    this.keyState = {}
-    this.keyDownEvent = this.keyDownEvent.bind(this)
-    this.keyUpEvent = this.keyUpEvent.bind(this)
-    this.addEvents()
-  }
-  public addEvents (): void
+    document.addEventListener("keydown", Keyboard.keyDownEvent)
+    document.addEventListener("keyup", Keyboard.keyUpEvent)
+  },
+  removeEvents (): void
   {
-    document.addEventListener("keydown", this.keyDownEvent)
-    document.addEventListener("keyup", this.keyUpEvent)
-  }
-  public removeEvents (): void
+    document.removeEventListener("keydown", Keyboard.keyDownEvent)
+    document.removeEventListener("keyup", Keyboard.keyUpEvent)
+  },
+  keyDownEvent (event: KeyboardEvent): void
   {
-    document.removeEventListener("keydown", this.keyDownEvent)
-    document.removeEventListener("keyup", this.keyUpEvent)
-  }
-  private keyDownEvent (event: KeyboardEvent): void
+    keyState[event.key] = true
+  },
+  keyUpEvent (event: KeyboardEvent): void
   {
-    this.keyState[event.key] = true
-  }
-  private keyUpEvent (event: KeyboardEvent): void
+    keyState[event.key] = false
+  },
+  isKeyDown (key: KeyCode): boolean
   {
-    this.keyState[event.key] = false
-  }
-  public isKeyDown (key: KeyCode): boolean
-  {
-    return !!this.keyState[key]
+    return !!keyState[key]
   }
 }
