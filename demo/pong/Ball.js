@@ -1,21 +1,29 @@
 "use strict"
 
 const SAT = require("sat")
-const { Audio } = require("../..")
+const { Audio, Transform } = require("../..")
 const audio = new Audio()
 
 class Ball
 {
   constructor ()
   {
-    this.position = { x: 50, y: 50 }
-    this.velocity = { x: 40, y: 40 }
-    this.radius = 3
+    this.position = { x: 250, y: 250 }
+    if (Math.random() < 0.5)
+    {
+      this.velocity = { x: 40, y: 40 }
+    }
+    else
+    {
+      this.velocity = { x: -40, y: 40 }
+    }
+    this.radius = 15
+    this.speed = 5
   }
   update (dt)
   {
-    this.position.x += this.velocity.x * dt
-    this.position.y += this.velocity.y * dt
+    this.position.x += this.velocity.x * this.speed * dt
+    this.position.y += this.velocity.y * this.speed * dt
   }
   getShape ()
   {
@@ -35,9 +43,14 @@ class Ball
     audio.newSource("bounce.wav")
     this.velocity.y *= -1
   }
-  draw (graphics)
+  draw (canvas)
   {
-    graphics.circle(this.position, this.radius)
+    canvas.push()
+    const transform = new Transform()
+    transform.translate(this.position)
+    canvas.transform(transform)
+    canvas.drawCircle(0, this.radius)
+    canvas.pop()
   }
 }
 

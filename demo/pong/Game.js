@@ -4,7 +4,7 @@ const Ball = require("./Ball")
 const Paddle = require("./Paddle")
 const SAT = require("sat")
 const fond = require("../..")
-const { Graphics } = fond
+const { Canvas2d, Keyboard } = fond
 
 class Game
 {
@@ -12,19 +12,21 @@ class Game
   {
     this.ball = new Ball()
     this.paddles = [
-      new Paddle({ x: 0, y: 40 }, { up: "w", down: "s" }),
-      new Paddle({ x: 95, y: 40 }, { up: "ArrowUp", down: "ArrowDown" }),
+      new Paddle({ x: 0, y: 250 }, { up: "w", down: "s" }),
+      new Paddle({ x: 475, y: 250 }, { up: "ArrowUp", down: "ArrowDown" }),
     ]
   }
   enter ()
   {
-    this.graphics = new Graphics()
-    this.graphics.addToDom()
-    this.graphics.fitWindow()
+    this.canvas2d = new Canvas2d()
+    this.canvas2d.resize(500, 500)
+    this.canvas2d.addToDom()
+    Keyboard.addEvents()
   }
   leave ()
   {
-    this.graphics.removeFromDom()
+    this.canvas2d.removeFromDom()
+    Keyboard.removeEvents()
   }
   update (dt)
   {
@@ -55,17 +57,16 @@ class Game
     {
       this.ball.wallBounce()
     }
-    else if (this.ball.position.y > 100 - this.ball.radius)
+    else if (this.ball.position.y > 500 - this.ball.radius)
     {
       this.ball.wallBounce()
     }
   }
   draw ()
   {
-    this.graphics.clear()
-    this.graphics.letterBox()
-    this.ball.draw(this.graphics)
-    this.paddles.forEach((paddle) => paddle.draw(this.graphics))
+    this.canvas2d.clear()
+    this.ball.draw(this.canvas2d)
+    this.paddles.forEach((paddle) => paddle.draw(this.canvas2d))
   }
 }
 

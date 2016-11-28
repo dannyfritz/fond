@@ -1,9 +1,7 @@
 "use strict"
 
-const fond = require("../..")
+const { Keyboard } = require("../..")
 const SAT = require("sat")
-const { Keyboard } = fond
-const keyboard = new Keyboard
 
 class Paddle
 {
@@ -11,21 +9,21 @@ class Paddle
   {
     this.position = position
     this.controls = controls
-    this.size = { height: 20, width: 5 }
-    this.speed = 50
+    this.size = { height: 100, width: 25 }
+    this.speed = 250
   }
   update (dt)
   {
-    if (keyboard.isKeyDown(this.controls.up))
+    if (Keyboard.isKeyDown(this.controls.up))
     {
       this.position.y -= dt * this.speed
     }
-    if (keyboard.isKeyDown(this.controls.down))
+    if (Keyboard.isKeyDown(this.controls.down))
     {
       this.position.y += dt * this.speed
     }
     this.position.y = Math.max(0, this.position.y)
-    this.position.y = Math.min(100 - this.size.height, this.position.y)
+    this.position.y = Math.min(500 - this.size.height, this.position.y)
   }
   getShape ()
   {
@@ -41,9 +39,9 @@ class Paddle
       ]
     )
   }
-  draw (graphics)
+  draw (canvas)
   {
-    graphics.polygon(this.getShape().points)
+    canvas.drawPolygon(0, this.getShape().points)
   }
 }
 

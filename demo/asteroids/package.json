@@ -1,0 +1,20 @@
+{
+  "name": "asteroids",
+  "private": true,
+  "scripts": {
+    "build": "browserify main.ts -p [ tsify --noImplicitAny ] --debug -o bundle.js",
+    "dev": "watchify main.ts -p [ tsify --noImplicitAny ] -v --debug -o bundle.js"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.14.40",
+    "@types/node": "^6.0.51",
+    "browserify": "^13.1.1",
+    "tsify": "^2.0.3",
+    "typescript": "^2.0.0",
+    "watchify": "^3.7.0"
+  },
+  "dependencies": {
+    "lodash": "^4.16.4",
+    "sat": "^0.6.0"
+  }
+}
