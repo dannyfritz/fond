@@ -1,9 +1,9 @@
 // IDEA(danny): https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/code
 // TODO(danny): KeyCode Dictionary
-export type KeyCode =
-  "ArrowUp" | "arrowDown" | "arrowLeft" | "arrowRight" |
-  "w" | "s" | "a" | "d" |
-  "space"
+export type Code =
+  "ArrowUp" | "ArrowDown" | "ArrowLeft" | "ArrowRight" |
+  "KeyW" | "KeyS" | "KeyA" | "KeyD" |
+  "Space"
 
 const keyState: { [index: string]: boolean } = {}
 
@@ -21,13 +21,13 @@ export const Keyboard =
   },
   keyDownEvent (event: KeyboardEvent): void
   {
-    keyState[event.key] = true
+    keyState[event.code] = true
   },
   keyUpEvent (event: KeyboardEvent): void
   {
-    keyState[event.key] = false
+    keyState[event.code] = false
   },
-  isKeyDown (key: KeyCode): boolean
+  isKeyDown (key: Code): boolean
   {
     return !!keyState[key]
   }

@@ -37,8 +37,12 @@ export class Transform
   {
     this.operations.push({type: TransformOperationType.rotate, angle})
   }
-  public scale (factor: Vector2d) : void
+  public scale (factor: Vector2d | number) : void
   {
+    if (typeof factor === "number")
+    {
+      factor = { x: factor, y: factor }
+    }
     this.operations.push({type: TransformOperationType.scale, factor})
   }
   public translate (distance: Vector2d) : void

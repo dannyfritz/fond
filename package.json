@@ -4,8 +4,8 @@
   "license": "MIT",
   "description": "[Website](https://dannyfritz.github.io/fond/)",
   "homepage": "https://github.com/dannyfritz/fond#readme",
-  "main": "dist/index.js",
-  "typing": "dist/index.d.ts",
+  "main": "dist/fond.js",
+  "types": "dist/fond.d.ts",
   "scripts": {
     "test": "eslint --ext .ts .",
     "build": "tsc",

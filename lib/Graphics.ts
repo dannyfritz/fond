@@ -41,9 +41,17 @@ export class Canvas2d
   {
 
   }
-  public drawImage (image: Image) : void
+  public drawSprite (sprite: Sprite, frame: Frame) : void
   {
-
+    // TODO(danny): expose this
+    this.context.imageSmoothingEnabled = false
+    this.context.drawImage(
+      sprite.image,
+      frame.offset.x, frame.offset.y,
+      frame.size.x, frame.size.y,
+      0, 0,
+      frame.size.x, frame.size.y
+    )
   }
   public drawText (drawMode: DrawMode, text: Text) : void
   {
@@ -183,11 +191,18 @@ export class Text
   }
 }
 
-export class Image
+export class Sprite
 {
-  public src : string
+  public image : HTMLImageElement
   constructor (src : string)
   {
-    this.src = src
+    this.image = new Image()
+    this.image.src = src
   }
+}
+
+export interface Frame
+{
+  offset: Vector2d,
+  size: Vector2d
 }

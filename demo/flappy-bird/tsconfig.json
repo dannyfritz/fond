@@ -1,19 +1,17 @@
 {
   "compilerOptions": {
+    "noEmit": true,
     "module": "commonjs",
     "target": "es6",
     "noImplicitAny": true,
     "preserveConstEnums": true,
     "sourceMap": true,
     "moduleResolution": "node",
-    "outDir": "dist",
-    "declaration": true,
     "pretty": true
   },
   "compileOnSave": false,
   "buildOnSave": false,
   "files": [
-    "Canvas2dExtension.d.ts",
-    "fond.ts"
+    "main.ts"
   ]
 }
