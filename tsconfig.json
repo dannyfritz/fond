@@ -13,6 +13,9 @@
   "compileOnSave": false,
   "buildOnSave": false,
   "files": [
-    "fond.ts"
+    "types/Misc.d.ts",
+    "types/WebGL2.d.ts",
+    "src/fond.ts",
+    "demoes/bouncing_ball/bouncing_ball.ts"
   ]
 }

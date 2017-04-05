@@ -8,8 +8,8 @@
   "types": "dist/fond.d.ts",
   "scripts": {
     "test": "eslint --ext .ts .",
-    "build": "tsc",
-    "dev": "tsc --watch"
+    "build": "webpack --progress --colors",
+    "dev": "webpack --progress --colors --watch"
   },
   "repository": {
     "type": "git",
@@ -29,10 +29,23 @@
     "README.md"
   ],
   "devDependencies": {
-    "@types/node": "^6.0.51",
-    "eslint": "^3.3.1",
+    "@types/chai": "^3.4.35",
+    "@types/node": "^7.0.12",
+    "eslint": "^3.19.0",
+    "eslint-config-es2015": "^1.1.0",
+    "eslint-config-standard": "^10.0.0",
+    "eslint-plugin-html": "^2.0.1",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-standard": "^2.2.0",
     "eslint-plugin-typescript": "^0.1.0",
+    "raw-loader": "^0.5.1",
+    "ts-loader": "^2.0.3",
     "typescript": "^2.0.0",
-    "typescript-eslint-parser": "^1.0.0"
+    "typescript-eslint-parser": "^2.1.0",
+    "watchify": "^3.9.0",
+    "webpack": "^2.3.3"
+  },
+  "dependencies": {
+    "chai": "^3.5.0"
   }
 }
