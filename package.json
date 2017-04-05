@@ -1,6 +1,6 @@
 {
   "name": "fond",
-  "version": "2.0.1",
+  "version": "3.0.0",
   "license": "MIT",
   "description": "[Website](https://dannyfritz.github.io/fond/)",
   "homepage": "https://github.com/dannyfritz/fond#readme",
@@ -34,8 +34,5 @@
     "eslint-plugin-typescript": "^0.1.0",
     "typescript": "^2.0.0",
     "typescript-eslint-parser": "^1.0.0"
-  },
-  "dependencies": {
-    "moody": "^1.0.0"
   }
 }

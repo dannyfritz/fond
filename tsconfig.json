@@ -13,7 +13,6 @@
   "compileOnSave": false,
   "buildOnSave": false,
   "files": [
-    "Canvas2dExtension.d.ts",
     "fond.ts"
   ]
 }
