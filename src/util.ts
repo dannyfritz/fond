@@ -1,4 +1,5 @@
-export const enum SIZEOF {
+export const enum SIZEOF
+{
   FLOAT = 4,
   FLOAT32 = 4,
   FLOAT64 = 8,
@@ -24,7 +25,7 @@ export function getImage (filename : string)
   })
 }
 
-export function createShader(gl : WebGL2RenderingContext, type : 0x8B30 | 0x8B31, source : string)
+export function createShader(gl : WebGL2RenderingContext, type : number, source : string)
 : WebGLShader
 {
   const shader = gl.createShader(type);
@@ -39,8 +40,8 @@ export function createShader(gl : WebGL2RenderingContext, type : 0x8B30 | 0x8B31
   gl.deleteShader(shader);
 }
 
-export async function createProgram(gl : WebGL2RenderingContext, vertexShader : WebGLShader, fragmentShader : WebGLShader)
-: Promise<WebGLProgram>
+export function createProgram(gl : WebGL2RenderingContext, vertexShader : WebGLShader, fragmentShader : WebGLShader)
+: WebGLProgram
 {
   const program = gl.createProgram();
   gl.attachShader(program, vertexShader);

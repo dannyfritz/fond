@@ -1,9 +1,9 @@
 import Fond, { Graphics } from "../../src/fond"
-console.log(Fond, Graphics)
+
 const fond = new Fond()
 const graphics = new Graphics("canvas")
 
-console.log(Graphics)
+console.log(graphics)
 
 fond.update = function (dt : number) {
 

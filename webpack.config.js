@@ -14,6 +14,10 @@ module.exports = [
           test: /\.tsx?$/,
           loader: 'ts-loader',
         },
+        {
+          test: /\.glsl$/,
+          use: 'raw-loader'
+        },
       ],
     },
   },
@@ -31,6 +35,10 @@ module.exports = [
         {
           test: /\.tsx?$/,
           loader: 'ts-loader',
+        },
+        {
+          test: /\.glsl$/,
+          use: 'raw-loader'
         },
       ],
     },
