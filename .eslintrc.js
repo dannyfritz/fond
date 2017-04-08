@@ -1,7 +1,11 @@
 module.exports = {
   "root": true,
   "plugins": [
-    "html"
+    "html",
+    "typescript",
+    "import",
+    "node",
+    "promise",
   ],
   "extends": ["es2015", "standard"],
   "parser": "typescript-eslint-parser",
@@ -9,7 +13,8 @@ module.exports = {
     "sourceType": "module"
   },
   "rules": {
-    "quotes": ["error", "template"],
+    "brace-style": ["error", "allman"],
+    "quotes": ["error", "double", { "allowTemplateLiterals": true }],
     "comma-dangle": ["error", {
       "arrays": "always-multiline",
       "objects": "always-multiline",

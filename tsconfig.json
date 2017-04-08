@@ -1,20 +1,18 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
-    "target": "es6",
     "noImplicitAny": true,
     "preserveConstEnums": true,
-    "sourceMap": true,
     "moduleResolution": "node",
-    "outDir": "dist",
     "declaration": true,
-    "pretty": false
+    "allowSyntheticDefaultImports": true,
+    "lib": ["es2015", "dom"]
   },
   "compileOnSave": false,
   "buildOnSave": false,
   "files": [
     "types/Misc.d.ts",
     "types/WebGL2.d.ts",
-    "src/fond.ts"
+    "src/fond.ts",
+    "src/util.ts"
   ]
 }
