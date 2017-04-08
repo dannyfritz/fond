@@ -8,8 +8,8 @@
   "types": "dist/fond",
   "scripts": {
     "test": "eslint --ext .ts .",
-    "build": "mkdir dist || browserify --standalone fond --debug src/fond.ts -p tsify -t brfs | derequire | exorcist ./dist/fond.js.map > ./dist/fond.js",
-    "dev": "mkdir dist || watchify --standalone fond --debug src/fond.ts -p tsify -t brfs -o \"derequire | exorcist ./dist/fond.js.map > ./dist/fond.js\""
+    "build": "mkdir dist || browserify -v --standalone fond --debug src/fond.ts -p tsify -t brfs | derequire | exorcist ./dist/fond.js.map > ./dist/fond.js",
+    "dev": "mkdir dist || watchify -v --standalone fond --debug src/fond.ts -p tsify -t brfs -o \"derequire | exorcist ./dist/fond.js.map > ./dist/fond.js\""
   },
   "repository": {
     "type": "git",

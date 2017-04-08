@@ -4,8 +4,8 @@
   "description": "",
   "main": "main.js",
   "scripts": {
-    "build": "mkdir dist || browserify --debug main.js | exorcist ./dist/bundle.js.map > ./dist/bundle.js",
-    "dev": "mkdir dist || watchify --debug main.js -o \"exorcist ./dist/bundle.js.map > ./dist/bundle.js\""
+    "build": "mkdir dist || browserify -v --debug main.js | exorcist ./dist/bundle.js.map > ./dist/bundle.js",
+    "dev": "mkdir dist || watchify -v --debug main.js -o \"exorcist ./dist/bundle.js.map > ./dist/bundle.js\""
   },
   "keywords": [],
   "author": "",
