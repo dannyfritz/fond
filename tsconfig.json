@@ -12,7 +12,6 @@
   "files": [
     "types/Misc.d.ts",
     "types/WebGL2.d.ts",
-    "src/fond.ts",
-    "src/util.ts"
+    "src/fond.ts"
   ]
 }
