@@ -16,11 +16,11 @@ export class Timer
   public getDelta ()
   : number
   {
-    return this.currentTime - this.lastTime
+    return (this.currentTime - this.lastTime) / 1000
   }
   public getTime ()
   : number
   {
-    return this.currentTime - this.start
+    return (this.currentTime - this.start) / 1000
   }
 }
