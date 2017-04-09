@@ -1,15 +1,25 @@
 import { createProgram, createShader, SIZEOF } from "./util"
+import * as glMatrix from "gl-matrix"
+const { mat4 } = glMatrix
 const assert = require("assert")
 const fs = require("fs")
 const path = require("path")
 
 export type DRAWMODE = "FILL" | "LINE"
 
+export type color = {
+  r: number,
+  g: number,
+  b: number,
+  a: number,
+}
+
 export class Graphics {
 
   private canvas : HTMLCanvasElement
   private gl : WebGL2RenderingContext
   private program : WebGLProgram
+  private transformStack : glMatrix.mat4[]
 
   constructor (selector : string)
   {
@@ -35,14 +45,93 @@ export class Graphics {
     gl.clearColor(0, 0, 0, 1)
     gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer())
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, gl.createBuffer())
-    const v_resolution = gl.getUniformLocation(this.program, "v_resolution")
-    gl.uniform2f(v_resolution, gl.canvas.width, gl.canvas.height)
+    const u_projectionMatrix = gl.getUniformLocation(this.program, "u_projectionMatrix")
+    const projection = mat4.ortho(
+      mat4.create(),
+      0, gl.canvas.clientWidth,
+      gl.canvas.clientHeight, 0,
+      -400, 400
+    )
+    gl.uniformMatrix4fv(u_projectionMatrix, false, projection)
+    this.origin()
   }
 
-  public setClearColor (r : number, g : number, b : number, a : number)
+  private getTransform ()
+  : glMatrix.mat4
+  {
+    return this.transformStack[this.transformStack.length - 1]
+  }
+
+  private setTransform ()
   : void
   {
-    this.gl.clearColor(r, g, b, a)
+    const gl = this.gl
+    const current = this.transformStack[this.transformStack.length - 1]
+    const u_transformMatrix = gl.getUniformLocation(this.program, "u_transformMatrix")
+    gl.uniformMatrix4fv(u_transformMatrix, false, current)
+  }
+
+  public push ()
+  : void
+  {
+    this.transformStack.push(mat4.clone(this.getTransform()))
+  }
+
+  public pop ()
+  : void
+  {
+    if (this.transformStack.length === 1) {
+      return
+    }
+    this.transformStack.pop()
+    this.setTransform()
+  }
+
+  public origin ()
+  : void
+  {
+    const identity = mat4.create()
+    this.transformStack = [ identity ]
+
+    this.setTransform()
+  }
+
+  public scale (x : number, y : number)
+  : void
+  {
+    const current = this.getTransform()
+    mat4.scale(current, current, [x, y, 1])
+    this.setTransform()
+  }
+
+  public rotate (radians : number)
+  : void
+  {
+    const current = this.getTransform()
+    mat4.rotate(current, current, radians, [0, 0, 1])
+    this.setTransform()
+  }
+
+  public translate (x : number, y : number)
+  : void
+  {
+    const current = this.getTransform()
+    mat4.translate(current, current, [x, y, 0])
+    this.setTransform()
+  }
+
+  public getClearColor ()
+  : color
+  {
+    const gl = this.gl
+    const [r, g, b, a] = gl.getParameter(gl.COLOR_CLEAR_VALUE)
+    return { r, g, b, a }
+  }
+
+  public setClearColor (color : color)
+  : void
+  {
+    this.gl.clearColor(color.r, color.g, color.b, color.a)
   }
 
   public clear ()
@@ -51,13 +140,22 @@ export class Graphics {
     this.gl.clear(this.gl.COLOR_BUFFER_BIT)
   }
 
-  public setColor (r : number, g : number, b : number, a : number)
+  public getColor ()
+  : color
+  {
+    const gl = this.gl
+    const colorUniform = gl.getUniformLocation(this.program, "u_constantColor")
+    const [r, g, b, a] = gl.getUniform(this.program, colorUniform)
+    return { r, g, b, a }
+  }
+
+  public setColor (color : color)
   : void
   {
     const gl = this.gl
 
-    const colorUniform = gl.getUniformLocation(this.program, "f_color")
-    gl.uniform4f(colorUniform, r, g, b, a)
+    const colorUniform = gl.getUniformLocation(this.program, "u_constantColor")
+    gl.uniform4f(colorUniform, color.r, color.g, color.b, color.a)
   }
 
   public rectangle (mode : DRAWMODE, x : number, y : number, width : number, height : number)
@@ -81,4 +179,5 @@ export class Graphics {
     gl.vertexAttribPointer(v_position, 2, gl.FLOAT, false, 0, 0)
     gl.drawElements(gl.TRIANGLES, elements.length, gl.UNSIGNED_BYTE, 0)
   }
+
 }

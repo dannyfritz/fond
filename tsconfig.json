@@ -3,15 +3,14 @@
     "noImplicitAny": true,
     "preserveConstEnums": true,
     "moduleResolution": "node",
-    "declaration": true,
+    "declaration": false,
     "allowSyntheticDefaultImports": true,
-    "lib": ["es2015", "dom"]
+    "lib": ["es2015", "dom"],
+    "typeRoots": [
+      "./node_modules/@types",
+      "./@types"
+    ]
   },
   "compileOnSave": false,
-  "buildOnSave": false,
-  "files": [
-    "types/Misc.d.ts",
-    "types/WebGL2.d.ts",
-    "src/fond.ts"
-  ]
+  "buildOnSave": false
 }

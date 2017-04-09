@@ -1,7 +1,9 @@
 import { Timer } from "./timer"
 
 export class Runtime {
+
   constructor () {}
+
   public run ()
   : void
   {
@@ -16,13 +18,17 @@ export class Runtime {
     }
     requestAnimationFrame(loop)
   }
+
   public load ()
   : void
   {}
+
   public update (dt : number)
   : void
   {}
+
   public draw ()
   : void
   {}
+
 }

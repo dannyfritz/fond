@@ -1,5 +1,11 @@
 # TODO
 
+## Documentation
+
+- [ ] Landing
+- [ ] JSDoc
+- [ ] Demoes
+
 ## Graphics
 
 ### Types
@@ -36,11 +42,11 @@
 
 ### State
 
-- [ ] getClearColor / set
+- [x] getClearColor / set
 - [ ] getBlendMode / set
 - [ ] getCanvas / set
 - [ ] getCanvasFormats
-- [ ] getColor / set
+- [x] getColor / set
 - [ ] getColorMask / set
 - [ ] getDefaultFilter / set
 - [ ] getFont / set
@@ -63,13 +69,13 @@
 
 ### Coordinates
 
-- [ ] origin
-- [ ] pop
-- [ ] push
-- [ ] rotate
-- [ ] scale
+- [x] origin
+- [x] pop
+- [x] push
+- [x] rotate
+- [x] scale
 - [ ] shear
-- [ ] translate
+- [x] translate
 
 ## Audio
 
