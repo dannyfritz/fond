@@ -26,7 +26,7 @@
 ### Drawing
 
 - [ ] arc
-- [ ] circle
+- [x] circle
 - [x] clear
 - [ ] discard
 - [ ] draw

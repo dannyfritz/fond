@@ -169,14 +169,39 @@ export class Graphics {
        x, y + height,
     ]
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW)
+    const v_position = gl.getAttribLocation(this.program, "v_position")
+    gl.enableVertexAttribArray(v_position)
+    gl.vertexAttribPointer(v_position, 2, gl.FLOAT, false, 0, 0)
     const elements = [
       0, 1, 2,
       0, 2, 3,
     ]
     gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint8Array(elements), gl.STATIC_DRAW)
+    gl.drawElements(gl.TRIANGLES, elements.length, gl.UNSIGNED_BYTE, 0)
+  }
+
+  public circle (mode : DRAWMODE, x : number, y : number, radius : number, segments : number = 20)
+  : void
+  {
+    const gl = this.gl
+    const vertices = [
+       x, y,
+    ]
+    for (let i=0; i<segments; i++) {
+      vertices.push(x + radius * Math.cos(2 * Math.PI / segments * i))
+      vertices.push(y + radius * Math.sin(2 * Math.PI / segments * i))
+    }
+    vertices.push(x, y)
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW)
     const v_position = gl.getAttribLocation(this.program, "v_position")
     gl.enableVertexAttribArray(v_position)
     gl.vertexAttribPointer(v_position, 2, gl.FLOAT, false, 0, 0)
+    const elements = []
+    for (let i=1; i<segments; i++) {
+      elements.push(0, i, i+1)
+    }
+    elements.push(0, segments, 1)
+    gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint8Array(elements), gl.STATIC_DRAW)
     gl.drawElements(gl.TRIANGLES, elements.length, gl.UNSIGNED_BYTE, 0)
   }
 
