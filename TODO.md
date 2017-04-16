@@ -31,6 +31,7 @@
 - [ ] discard
 - [x] draw (drawTexture)
 - [ ] draw (drawCanvas)
+- [ ] draw (drawTextureBatch)
 - [ ] ellipse
 - [ ] line
 - [ ] points

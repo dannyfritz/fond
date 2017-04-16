@@ -1,13 +1,11 @@
 
 export class Texture {
   public image : HTMLImageElement
-  public glTex : WebGLTexture
   public getReady : Promise<Event>
   public isReady : Boolean
 
-  constructor (path : string, texture : WebGLTexture)
+  constructor (path : string)
   {
-    this.glTex = texture
     this.image = new Image()
     this.image.src = path
     this.getReady = new Promise((resolve, reject) => {
