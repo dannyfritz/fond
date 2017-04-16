@@ -31,6 +31,7 @@
   "devDependencies": {
     "@types/gl-matrix": "^2.2.34",
     "@types/node": "^7.0.12",
+    "@types/webgl2": "0.0.0",
     "brfs": "^1.4.3",
     "browserify": "^14.3.0",
     "derequire": "^2.0.6",
