@@ -1,0 +1,18 @@
+{
+  "name": "passing-cloud",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "build": "mkdir dist || browserify -v --debug main.js | exorcist ./dist/bundle.js.map > ./dist/bundle.js",
+    "dev": "mkdir dist || watchify -v --debug main.js -o \"exorcist ./dist/bundle.js.map > ./dist/bundle.js\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "browserify": "^14.3.0",
+    "exorcist": "^0.4.0",
+    "watchify": "^3.9.0"
+  }
+}

@@ -1,4 +1,5 @@
 import { createProgram, createShader, SIZEOF } from "./util"
+import { Texture } from "./image"
 import * as glMatrix from "gl-matrix"
 const { mat4 } = glMatrix
 const assert = require("assert")
@@ -42,6 +43,8 @@ export class Graphics {
     const fragmentShader = createShader(gl, gl.FRAGMENT_SHADER, fragmentShaderSource)
     this.program = createProgram(gl, vertexShader, fragmentShader)
     gl.useProgram(this.program)
+    gl.enable(gl.BLEND)
+    gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA)
     gl.clearColor(0, 0, 0, 1)
     gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer())
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, gl.createBuffer())
@@ -54,6 +57,7 @@ export class Graphics {
     )
     gl.uniformMatrix4fv(u_projectionMatrix, false, projection)
     this.origin()
+    this.setColor({r: 1, g: 1, b: 1, a: 1})
   }
 
   private getTransform ()
@@ -202,6 +206,54 @@ export class Graphics {
     }
     elements.push(0, segments, 1)
     gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint8Array(elements), gl.STATIC_DRAW)
+    gl.drawElements(gl.TRIANGLES, elements.length, gl.UNSIGNED_BYTE, 0)
+  }
+
+  public newTexture (path : string)
+  : Texture
+  {
+    return new Texture(path, this.gl.createTexture())
+  }
+
+  public drawTexture (texture : Texture, x : number = 0, y : number = 0)
+  : void
+  {
+    const gl = this.gl
+    gl.activeTexture(gl.TEXTURE0)
+    gl.bindTexture(gl.TEXTURE_2D, texture.glTex)
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR)
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST)
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.REPEAT)
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.REPEAT)
+    gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true)
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, texture.image)
+    gl.uniform1i(gl.getUniformLocation(this.program, "tex0"), 0)
+    const width = texture.image.width
+    const height = texture.image.height
+    const vertices = [
+      x,         y,          0, 0,
+      x + width, y,          1, 0,
+      x + width, y + height, 1, 1,
+      x,         y + height, 0, 1,
+    ]
+    gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer())
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW)
+    const elements = [
+      0, 1, 3,
+      1, 2, 3,
+    ]
+    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, gl.createBuffer())
+    gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint8Array(elements), gl.STATIC_DRAW)
+    const v_position = gl.getAttribLocation(this.program, "v_position")
+    gl.enableVertexAttribArray(v_position)
+    gl.vertexAttribPointer(
+      v_position, 2, gl.FLOAT, false, 4 * SIZEOF.FLOAT, 0
+    )
+    const v_texcoord = gl.getAttribLocation(this.program, "v_texcoord")
+    gl.enableVertexAttribArray(v_texcoord)
+    gl.vertexAttribPointer(
+      v_texcoord, 2, gl.FLOAT, false, 4 * SIZEOF.FLOAT, 2 * SIZEOF.FLOAT
+    )
     gl.drawElements(gl.TRIANGLES, elements.length, gl.UNSIGNED_BYTE, 0)
   }
 

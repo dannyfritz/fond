@@ -13,7 +13,7 @@
 - [ ] Canvas
 - [ ] Drawable
 - [ ] Font
-- [ ] Image
+- [x] Image (Texture, graphics.newTexture)
 - [ ] Mesh
 - [ ] ParticleSystem
 - [ ] Quad
@@ -29,7 +29,8 @@
 - [x] circle
 - [x] clear
 - [ ] discard
-- [ ] draw
+- [x] draw (drawTexture)
+- [ ] draw (drawCanvas)
 - [ ] ellipse
 - [ ] line
 - [ ] points
