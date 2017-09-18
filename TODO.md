@@ -1,5 +1,7 @@
 # TODO
 
+Fond
+
 ## Documentation
 
 - [ ] Landing
@@ -127,6 +129,7 @@
 
 - [ ] getJoystickCount
 - [ ] getJoysticks
+    this.setTransform()
 - [ ] loadGamepadMappings
 - [ ] saveGamepadMappings
 - [ ] setGamepadeMapping
