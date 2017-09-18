@@ -3,15 +3,8 @@
 [Website](https://dannyfritz.github.io/fond/)
 
 ## Packages
-asdf
-asdf
-asdf
-asdf
-xvad
-Fond is a pasdfasdfroject consisting of many packages. This i the best
-asdf
-asd
-fasdf
+Fond is a project consisting of many packages. Tons of packages!
+
 This is managed using [lerna](https://github.com/lerna/lerna).
 
 | Package | Version | Description |
