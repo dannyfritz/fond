@@ -4,7 +4,7 @@
 
 ## Packages
 
-Fond is a project consisting of many packages.
+Fond is a project consisting of many packages. Tons of packages!
 This is managed using [lerna](https://github.com/lerna/lerna).
 
 | Package | Version | Description |
