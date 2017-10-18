@@ -4,13 +4,7 @@
   "license": "MIT",
   "description": "[Website](https://dannyfritz.github.io/fond/)",
   "homepage": "https://github.com/dannyfritz/fond#readme",
-  "main": "dist/fond.js",
-  "types": "dist/fond",
-  "scripts": {
-    "test": "eslint --ext .ts .",
-    "build": "mkdir dist || browserify -v --standalone fond --debug src/fond.ts -p tsify -t brfs | derequire | exorcist ./dist/fond.js.map > ./dist/fond.js",
-    "dev": "mkdir dist || watchify -v --standalone fond --debug src/fond.ts -p tsify -t brfs -o \"derequire | exorcist ./dist/fond.js.map > ./dist/fond.js\""
-  },
+  "scripts": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/dannyfritz/fond.git"
@@ -18,40 +12,15 @@
   "keywords": [
     "fond",
     "game",
-    "gamedev"
+    "gamedev",
+    "engine"
   ],
   "author": "Danny Fritz <dannyfritz@gmail.com>",
   "bugs": {
     "url": "https://github.com/dannyfritz/fond/issues"
   },
-  "files": [
-    "dist",
-    "README.md"
-  ],
   "devDependencies": {
-    "@types/gl-matrix": "^2.2.34",
-    "@types/node": "^7.0.12",
-    "@types/webgl2": "0.0.0",
-    "brfs": "^1.4.3",
-    "browserify": "^14.3.0",
-    "derequire": "^2.0.6",
-    "eslint": "^3.19.0",
-    "eslint-config-es2015": "^1.1.0",
-    "eslint-config-standard": "^10.0.0",
-    "eslint-plugin-html": "^2.0.1",
-    "eslint-plugin-import": "^2.2.0",
-    "eslint-plugin-node": "^4.2.2",
-    "eslint-plugin-promise": "^3.5.0",
-    "eslint-plugin-standard": "^2.2.0",
-    "eslint-plugin-typescript": "^0.1.0",
-    "exorcist": "^0.4.0",
-    "npm-stare": "^1.0.2",
-    "tsify": "^3.0.1",
-    "typescript": "^2.0.0",
-    "typescript-eslint-parser": "^2.1.0",
-    "watchify": "^3.9.0"
+    "lerna": "^2.2.0"
   },
-  "dependencies": {
-    "gl-matrix": "^2.3.2"
-  }
+  "dependencies": {}
 }
